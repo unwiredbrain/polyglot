@@ -1,0 +1,17 @@
+{
+    "name": "unwiredbrain/polyglot",
+    "type": "library",
+    "description": "A localization, pluralization and interpolation library for PHP.",
+    "keywords": ["polyglot", "localization", "pluralization", "interpolation", "internationalization", "l10n", "i18n"],
+    "homepage": "https://github.com/unwiredbrain/polyglot",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Massimo Lombardo",
+            "email": "unwiredbrain@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
