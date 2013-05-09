@@ -11,10 +11,12 @@
 
 namespace Polyglot\Context;
 
+use \Polyglot\Translatable;
+
 /**
  * @author Massimo Lombardo <unwiredbrain@gmail.com>
  */
-class Context implements \Polyglot\PolyglotInterface
+class Context implements Translatable
 {
 
     /**
@@ -23,34 +25,25 @@ class Context implements \Polyglot\PolyglotInterface
     private $name = null;
 
     /**
-     * @var string
-     */
-    private $path = null;
-
-    /**
      * Constructor.
      *
      * @param string $name The context name.
-     * @param string $path Where to find the .po/.mo files.
-     * @param string $encoding The encoding in which the .po/.mo files are
-     *                         expected to be. Optional, default is UTF-8.
      *
      * @api
      */
-    public function __construct ($name, $path, $encoding = 'UTF-8')
+    public function __construct ($name)
     {
         $this->name = $name;
-        $this->path = $path;
-        $this->encoding = $encoding;
-        bindtextdomain($name, $path);
-        bind_textdomain_codeset($name, $encoding);
     }
 
     protected function pluralize ($msgid, $msgid_plural, $n) {
         return dngettext($this->name, $msgid, $msgid_plural, $n);
     }
 
-    protected function interpolate ($sentence, array $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function interpolate ($sentence, array $params)
     {
         // For each parameter given...
         foreach ($params as $param => $value) {
@@ -70,14 +63,21 @@ class Context implements \Polyglot\PolyglotInterface
     public function translate($sentence, array $params = array())
     {
         $msgid = $sentence;
-        $msgid_plural = $sentence . '__PLURAL';
+        $msgid_plural = '';
         $n = 1;
+
         if (!empty($params['count']) && is_numeric($params['count'])) {
             $n = intval($params['count']);
         }
+
+        if (abs($n) > 1) {
+            $msgid_plural = $sentence;
+        }
+
         $sentence = $this->pluralize($msgid, $msgid_plural, $n);
         $sentence = $this->interpolate($sentence, $params);
-        return $this->name . ': ' . $sentence;
+
+        return $sentence;
     }
 
 }
