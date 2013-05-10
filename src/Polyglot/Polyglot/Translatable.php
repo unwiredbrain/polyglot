@@ -9,7 +9,7 @@
  * @license https://github.com/unwiredbrain/polyglot/blob/master/LICENSE MIT License
  */
 
-namespace Polyglot;
+namespace Polyglot\Polyglot;
 
 /**
  * @author Massimo Lombardo <unwiredbrain@gmail.com>

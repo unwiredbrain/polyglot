@@ -9,9 +9,9 @@
  * @license https://github.com/unwiredbrain/polyglot/blob/master/LICENSE MIT License
  */
 
-namespace Polyglot\Context;
+namespace Polyglot\Polyglot;
 
-use \Polyglot\Translatable;
+use Polyglot\Polyglot\Translatable;
 
 /**
  * @author Massimo Lombardo <unwiredbrain@gmail.com>

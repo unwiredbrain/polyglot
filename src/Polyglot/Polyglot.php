@@ -11,13 +11,13 @@
 
 namespace Polyglot;
 
-use \Polyglot\Context\Context;
-use \Polyglot\Translatable;
+use Polyglot\Polyglot\Translatable;
+use Polyglot\Polyglot\Context;
 
 /**
  * @author Massimo Lombardo <unwiredbrain@gmail.com>
  */
-class Polyglot implements Translatable
+class Polyglot implements Polyglot\Translatable
 {
 
     /**
@@ -226,7 +226,7 @@ class Polyglot implements Translatable
     public function register()
     {
         foreach (func_get_args() as $name) {
-            $this->contexts[$name] = new \Polyglot\Context\Context($name);
+            $this->contexts[$name] = new Context($name);
 
             bind_textdomain_codeset($name, 'UTF-8');
             bindtextdomain($name, $this->path);
