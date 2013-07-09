@@ -11,13 +11,13 @@
 
 namespace Polyglot;
 
-use Polyglot\Polyglot\Translatable;
-use Polyglot\Polyglot\Context;
+use Polyglot\Speaker\Translatable;
+use Polyglot\Speaker\Context;
 
 /**
  * @author Massimo Lombardo <unwiredbrain@gmail.com>
  */
-class Polyglot implements Polyglot\Translatable
+class Speaker implements Translatable
 {
 
     /**
@@ -41,7 +41,7 @@ class Polyglot implements Polyglot\Translatable
     private $path = null;
 
     /**
-     * @var Polyglot
+     * @var Speaker
      */
     protected static $instance = null;
 
@@ -51,7 +51,7 @@ class Polyglot implements Polyglot\Translatable
      * Example usage:
      *
      * <code>
-     * $polyglot = \Polyglot::getInstance();
+     * $polyglot = Speaker::getInstance();
      * $polyglot::monetary('da_DK');
      * $polyglot::time('en_CA');
      * </code>
@@ -66,12 +66,12 @@ class Polyglot implements Polyglot\Translatable
      * @param string $method The category to set/modify.
      * @param array $params The locale to use.
      *
-     * @return Polyglot Returns an instance of Polyglot, so to enable fluent interfaces.
+     * @return Speaker Returns an instance of the Speaker class, so to enable fluent interfaces.
      *
-     * @throws \DomainException
-     * @throws \InvalidArgumentException
+     * @throws \DomainException if trying to set an invalid category.
+     * @throws \InvalidArgumentException if no locale is given.
      */
-    public function __call ($method, $params)
+    public function __call($method, $params)
     {
         // Clean up.
         $method = strtolower($method);
@@ -106,13 +106,11 @@ class Polyglot implements Polyglot\Translatable
     /**
      * Constructor.
      *
-     * @param string $path The default path where to find all the locales.
+     * @param string $locale The default locale.
      *
-     * @throws \RuntimeException
-     *
-     * @api
+     * @throws \RuntimeException if the gettext extension is not found.
      */
-    private function __construct ($locale = self::DEFAULT_LOCALE)
+    private function __construct($locale = self::DEFAULT_LOCALE)
     {
         if (!extension_loaded('gettext')) {
             throw new \RuntimeException('Unable to setup Polyglot as gettext is not enabled.');
@@ -122,27 +120,15 @@ class Polyglot implements Polyglot\Translatable
     }
 
     /**
-     * Tests whether the internal context member has been initialized.
-     *
-     * @throws \UnexpectedValueException
-     */
-    private function doSanityCheck()
-    {
-        if (!($this->context instanceof Context)) {
-            throw new \UnexpectedValueException('No context specified.');
-        }
-    }
-
-    /**
      * Returns the Context instance identified by the specified name.
      *
      * Use this method to ease repetitive tasks.
      *
      * @param string $name The context name.
      *
-     * @return Polyglot\Context Returns an instance of Context.
+     * @return Context Returns an instance of the Context class.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException if trying to use an invalid Context.
      */
     public function getContext($name)
     {
@@ -166,13 +152,14 @@ class Polyglot implements Polyglot\Translatable
     /**
      * Returns the singleton instance.
      *
-     * @return Polyglot Returns the instance of Polyglot.
+     * @return Speaker Returns an instance of the Speaker class, so to enable fluent interfaces.
      */
-    public static function getInstance ()
+    public static function getInstance()
     {
-        if (NULL === self::$instance) {
+        if (null === self::$instance) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
@@ -188,11 +175,16 @@ class Polyglot implements Polyglot\Translatable
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \UnexpectedValueException if the internal Context pointer is not initialized.
      */
-    public function interpolate($sentence, array $params = array())
+    public function interpolate($sentence, array $context = array())
     {
-        $this->doSanityCheck();
-        return $this->context->interpolate($sentence, $params);
+        if (!($this->context instanceof Context)) {
+            throw new \UnexpectedValueException('No usable context found.');
+        }
+
+        return $this->context->interpolate($sentence, $context);
     }
 
     /**
@@ -213,15 +205,15 @@ class Polyglot implements Polyglot\Translatable
      * Example usage:
      *
      * <code>
-     * $polyglot = \Polyglot::getInstance();
+     * $polyglot = Speaker::getInstance();
      * $polyglot->register('formats', 'messages', 'menus', 'alerts');
      * ...
      * $polyglot->using('alerts')->translate('Preferences successfully saved.');
      * </code>
      *
-     * @param string[] A list of contexts.
+     * @param string[] A list of strings that represent multiple contexts.
      *
-     * @return Polyglot Returns an instance of Polyglot, so to enable fluent interfaces.
+     * @return Speaker Returns an instance of the Speaker class, so to enable fluent interfaces.
      */
     public function register()
     {
@@ -236,18 +228,18 @@ class Polyglot implements Polyglot\Translatable
     }
 
     /**
-     * Instructs Polyglot on where to find all the contexts' .po/.mo files.
+     * Instructs the Speaker on where to find all the contexts' .po/.mo files.
      *
      * @param string $path The path where to find all the contexts' .po/.mo files.
      *
-     * @return Polyglot Returns an instance of Polyglot, so to enable fluent interfaces.
+     * @return Speaker Returns an instance of the Speaker class, so to enable fluent interfaces.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException if the path given is not usable for any reason.
      */
     public function setPath($path)
     {
         if (!is_readable($path)) {
-            throw new \InvalidArgumentException('Path not found or not readable.');
+            throw new \InvalidArgumentException('Path not usable.');
         }
 
         $this->path = $path;
@@ -257,40 +249,45 @@ class Polyglot implements Polyglot\Translatable
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \UnexpectedValueException if the internal Context pointer is not initialized.
      */
-    public function translate($sentence, array $params = array())
+    public function translate($sentence, array $context = array())
     {
-        $this->doSanityCheck();
-        return $this->context->translate($sentence, $params);
+        if (!($this->context instanceof Context)) {
+            throw new \UnexpectedValueException('No usable context found.');
+        }
+
+        return $this->context->translate($sentence, $context);
     }
 
     /**
-     * Alters the internal context.
+     * Updates the internal Context pointer.
      *
      * Use this method to ease quick, one-off tasks.
      *
      * Example usage:
      *
      * <code>
-     * $polyglot = \Polyglot::getInstance();
+     * $polyglot = Speaker::getInstance();
      * $polyglot->register('formats', 'messages', 'menus', 'alerts');
      * ...
-     * $polyglot->using('alerts')->translate('Preferences successfully saved.');
+     * echo $polyglot->using('alerts')->translate('Preferences successfully saved.');
      * </code>
      *
      * @param string $name The context name.
      *
-     * @return Polyglot Returns an instance of Polyglot, so to enable fluent interfaces.
+     * @return Speaker Returns an instance of the Speaker class, so to enable fluent interfaces.
      *
-     * @throws \DomainException
+     * @throws \DomainException if an invalid Context is given.
      */
     public function using($name)
     {
-        if ($this->hasContext($name)) {
-            $this->context = $this->contexts[$name];
-        } else {
+        if (!$this->hasContext($name)) {
             throw new \DomainException('Invalid context.');
         }
+
+        $this->context = $this->contexts[$name];
 
         return $this;
     }

@@ -9,17 +9,18 @@
  * @license https://github.com/unwiredbrain/polyglot/blob/master/LICENSE MIT License
  */
 
-namespace Polyglot\Polyglot;
+namespace Polyglot\Speaker;
 
-use Polyglot\Polyglot\Translatable;
+use Polyglot\Speaker\Translatable;
 
 /**
  * @author Massimo Lombardo <unwiredbrain@gmail.com>
  */
 class Context implements Translatable
 {
-
     /**
+     * The context name.
+     *
      * @var string
      */
     private $name = null;
@@ -28,33 +29,41 @@ class Context implements Translatable
      * Constructor.
      *
      * @param string $name The context name.
-     *
-     * @api
      */
-    public function __construct ($name)
+    public function __construct($name)
     {
         $this->name = $name;
     }
 
-    protected function pluralize ($msgid, $msgid_plural, $n) {
+    /**
+     * Retrieves the pluralized version of a sentence according to the language locale pluralization rules.
+     *
+     * @param string $msgid The singular version of the sentence.
+     * @param string $msgid_plural The plural version of the sentence.
+     * @param int $n The number to use to choose which version to pick.
+     *
+     * @return string Either the singular or pluralized version of the sentence.
+     */
+    protected function pluralize($msgid, $msgid_plural, $n) {
         return dngettext($this->name, $msgid, $msgid_plural, $n);
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @internal This implementation is inspired to the PRS-3 one.
      */
-    public function interpolate ($sentence, array $params)
+    function interpolate($sentence, array $context = array())
     {
-        // For each parameter given...
-        foreach ($params as $param => $value) {
-            // ...which has a string or numeric parameter value...
-            if (is_string($value) || is_numeric($value)) {
-                // ...replace every occurrence of ${param} with its value.
-                $sentence = preg_replace('/\$\{(?:' . $param . ')\}/m', $value, $sentence);
-            }
+        // build a replacement array with braces around the context keys.
+        $interpolations = array();
+
+        foreach ($context as $tag => $value) {
+            $interpolations['${' . $tag . '}'] = $value;
         }
 
-        return $sentence;
+        // interpolate replacement values into the sentence and return
+        return strtr($sentence, $interpolations);
     }
 
     /**
