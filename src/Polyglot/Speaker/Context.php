@@ -59,7 +59,7 @@ class Context implements Translatable
         $interpolations = array();
 
         foreach ($context as $tag => $value) {
-            $interpolations['${' . $tag . '}'] = $value;
+            $interpolations['{' . $tag . '}'] = $value;
         }
 
         // interpolate replacement values into the sentence and return
