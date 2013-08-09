@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Good morning, {name}!"
+msgstr "Good morning, {name}!"
+
+msgid "You're currently signed in as {username}"
+msgstr "You're currently logged in as {username}"
+
+msgid "Sign out"
+msgstr "Log out"
+
+msgid "You have {count} new message."
+msgid_plural "You have {count} new message."
+msgstr[0] "You have one new message."
+msgstr[1] "You have {count} new messages."

@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# Months, title case
+msgid "January"
+msgstr "Janvier"
+
+# Months, title case
+msgid "February"
+msgstr "Février"
+
+# Months, title case
+msgid "March"
+msgstr "Mars"
+
+# Months, title case
+msgid "April"
+msgstr "Avril"
+
+# Months, title case
+msgid "May"
+msgstr "Mai"
+
+# Months, title case
+msgid "June"
+msgstr "Juin"
+
+# Months, title case
+msgid "July"
+msgstr "Juillet"
+
+# Months, title case
+msgid "August"
+msgstr "Août"
+
+# Months, title case
+msgid "September"
+msgstr "Septembre"
+
+# Months, title case
+msgid "October"
+msgstr "Octobre"
+
+# Months, title case
+msgid "November"
+msgstr "Novembre"
+
+# Months, title case
+msgid "December"
+msgstr "Décembre"
+
+# Months, lower case
+msgid "january"
+msgstr "janvier"
+
+# Months, lower case
+msgid "february"
+msgstr "février"
+
+# Months, lower case
+msgid "march"
+msgstr "mars"
+
+# Months, lower case
+msgid "april"
+msgstr "avril"
+
+# Months, lower case
+msgid "may"
+msgstr "mai"
+
+# Months, lower case
+msgid "june"
+msgstr "juin"
+
+# Months, lower case
+msgid "july"
+msgstr "juillet"
+
+# Months, lower case
+msgid "august"
+msgstr "août"
+
+# Months, lower case
+msgid "september"
+msgstr "septembre"
+
+# Months, lower case
+msgid "october"
+msgstr "octobre"
+
+# Months, lower case
+msgid "november"
+msgstr "novembre"
+
+# Months, lower case
+msgid "december"
+msgstr "décembre"

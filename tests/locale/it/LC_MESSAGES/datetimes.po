@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Months, title case
+msgid "January"
+msgstr "Gennaio"
+
+# Months, title case
+msgid "February"
+msgstr "Febbraio"
+
+# Months, title case
+msgid "March"
+msgstr "Marzo"
+
+# Months, title case
+msgid "April"
+msgstr "Aprile"
+
+# Months, title case
+msgid "May"
+msgstr "Maggio"
+
+# Months, title case
+msgid "June"
+msgstr "Giugno"
+
+# Months, title case
+msgid "July"
+msgstr "Luglio"
+
+# Months, title case
+msgid "August"
+msgstr "Agosto"
+
+# Months, title case
+msgid "September"
+msgstr "Settembre"
+
+# Months, title case
+msgid "October"
+msgstr "Ottobre"
+
+# Months, title case
+msgid "November"
+msgstr "Novembre"
+
+# Months, title case
+msgid "December"
+msgstr "Dicembre"
+
+# Months, lower case
+msgid "january"
+msgstr "gennaio"
+
+# Months, lower case
+msgid "february"
+msgstr "febbraio"
+
+# Months, lower case
+msgid "march"
+msgstr "marzo"
+
+# Months, lower case
+msgid "april"
+msgstr "aprile"
+
+# Months, lower case
+msgid "may"
+msgstr "maggio"
+
+# Months, lower case
+msgid "june"
+msgstr "giugno"
+
+# Months, lower case
+msgid "july"
+msgstr "luglio"
+
+# Months, lower case
+msgid "august"
+msgstr "agosto"
+
+# Months, lower case
+msgid "september"
+msgstr "settembre"
+
+# Months, lower case
+msgid "october"
+msgstr "ottobre"
+
+# Months, lower case
+msgid "november"
+msgstr "novembre"
+
+# Months, lower case
+msgid "december"
+msgstr "dicembre"
